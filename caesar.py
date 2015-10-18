@@ -20,25 +20,29 @@ class Caesar(object):
         for c in raw_str:
             if c in LETTERS:
                 num = LETTERS.find(c)
-                num = num + key
-                if num > len(LETTERS):
-                    num = num - len(LETTERS)
+                num += key
+                if num >= len(LETTERS):
+                    num -= len(LETTERS)
                 elif num < 0:
-                    num = num + len(LETTERS)
-                code = code + LETTERS[num]
+                    num += len(LETTERS)
+                code += LETTERS[num]
+            else:
+                code += c
         return code
 
     def caesar_decode(self, en_str):
         plain = ""
-        for key in range(len(LETTERS)):
+        for key in range(1, len(LETTERS)):
             for c in en_str:
                 if c in LETTERS:
                     num = LETTERS.find(c)
-                    num = num - key
-                if num < 0:
-                    num = num + len(LETTERS)
-                plain = plain + LETTERS[num]
-            plain = plain + '\n'
+                    num -= key
+                    if num < 0:
+                        num += len(LETTERS)
+                    plain += LETTERS[num]
+                else:
+                    plain += c
+            plain += '   [' + str(key) + ']\n'
 
         return plain
 
